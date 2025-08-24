@@ -31,9 +31,17 @@ namespace rf
 
 		bool hasTrips(uint32_t stopID) const
 		{
-			for (Weekday day = Weekday::Monday; day <= Weekday::Sunday; day = nextDay(day))
+			for (Weekday day = Weekday::Monday; day <= Weekday::Sunday; ++(uint32_t&)day)
 			{
-				if (!getData(day).stops.find(stopID)->second.trips.empty())
+				auto& stops = getData(day).stops;
+				auto it = stops.find(stopID);
+
+				if (it == stops.end())
+				{
+					continue;
+				}
+
+				if (!it->second.trips.empty())
 				{
 					return true;
 				}
@@ -44,8 +52,8 @@ namespace rf
 
 		TimeTableEntry nextTrip(uint32_t stopID, const Time& time) const
 		{
-			auto stops = getData(time).stops;
-			auto stopIt = getData(time).stops.find(stopID);
+			auto& stops = getData(time).stops;
+			auto stopIt = stops.find(stopID);
 
 			if (stopIt == stops.end())
 			{

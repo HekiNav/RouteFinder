@@ -90,7 +90,7 @@ namespace rf
 			tripReader.setTimeFormat("%Y%m%d");
 		}
 
-		void row(const std::string& tripID, const std::tm& arrivalTime, const std::tm& departureTime, uint32_t stopID, uint32_t stopSequence, std::_Ignore, bool pickupType, bool dropOffType, float shapeDistTravelled, bool timePoint)
+		void row(const std::string& tripID, const std::tm& arrivalTime, const std::tm& departureTime, uint32_t stopID, std::_Ignore, std::_Ignore, std::_Ignore, float shapeDistTravelled, bool timePoint, std::_Ignore)
 		{
 			std::stringstream ss(tripID);
 			tripReader.read(ss);
@@ -110,7 +110,7 @@ namespace rf
 			container.routes[routeHash] = Route(routeShortName);
 		}
 
-		void row(uint32_t stopID, std::string stopCode, std::string stopName, std::_Ignore, float lat, float lon, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore)
+		void row(uint32_t stopID, std::string stopCode, std::string stopName, std::_Ignore, float lat, float lon, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore)
 		{
 			container.stops[stopID] = Stop(stopCode, stopName, Point(lat, lon));
 		}

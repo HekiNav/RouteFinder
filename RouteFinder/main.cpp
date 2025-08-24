@@ -8,9 +8,9 @@
 #include <fstream>
 #include <filesystem>
 
-using TimeStopsReader = rf::CSVReader< rf::RouteBuilder, std::string, std::tm, std::tm, uint32_t, uint32_t, std::_Ignore, bool, bool, float, bool >;
+using TimeStopsReader = rf::CSVReader< rf::RouteBuilder, std::string, std::tm, std::tm, uint32_t, std::_Ignore, std::_Ignore, std::_Ignore, float, bool, std::_Ignore >;
 using RoutesReader = rf::CSVReader< rf::RouteBuilder, std::string, std::_Ignore, std::string, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore >;
-using StopsReader = rf::CSVReader< rf::RouteBuilder, uint32_t, std::string, std::string, std::_Ignore, float, float, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore >;
+using StopsReader = rf::CSVReader< rf::RouteBuilder, uint32_t, std::string, std::string, std::_Ignore, float, float, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore, std::_Ignore >;
 
 static constexpr size_t ReadBufferSize = 20 * 1024 * 1024;
 
@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 
 	static char* pBuffer = (char*)malloc(ReadBufferSize);
 
-	const char* StopTimesFilename = "C:\\Users\\laria\\source\\repos\\RouteFinder\\stop_times.txt";
+	const char* StopTimesFilename = "C:\\Users\\untoa\\RouteFinder\\stop_times.txt";
 	std::ifstream stopTimesFile = getFile( StopTimesFilename, pBuffer );
 	if (!stopTimesFile)
 	{
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	const char* RoutesFilename = "C:\\Users\\laria\\source\\repos\\RouteFinder\\routes.txt";
+	const char* RoutesFilename = "C:\\Users\\untoa\\RouteFinder\\routes.txt";
 	std::ifstream routesFile = getFile(RoutesFilename, pBuffer );
 	if (!routesFile)
 	{
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	const char* StopsFilename = "C:\\Users\\laria\\source\\repos\\RouteFinder\\stops.txt";
+	const char* StopsFilename = "C:\\Users\\untoa\\RouteFinder\\stops.txt";
 	std::ifstream stopsFile = getFile(StopsFilename, pBuffer);
 	if (!stopsFile)
 	{
