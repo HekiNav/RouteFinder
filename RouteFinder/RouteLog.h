@@ -85,7 +85,12 @@ namespace rf
 			return log.back();
 		}
 
-		RoutePosition lastPosition()
+		RoutePosition firstPosition() const
+		{
+			return log.front().back();
+		}
+
+		RoutePosition lastPosition() const
 		{
 			return log.back().back();
 		}

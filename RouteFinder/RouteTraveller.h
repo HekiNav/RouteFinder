@@ -22,6 +22,7 @@ namespace rf
 			log.addPosition(position);
 		}
 
+
 		uint32_t getStopID() const
 		{
 			return position.getStopID();
@@ -67,8 +68,9 @@ namespace rf
 			return position.canDisembark();
 		}
 
-		RouteTraveller disembark(uint32_t transferTimeMinutes) const
+		RouteTraveller disembark(uint32_t transferTimeMinutes)
 		{
+			this->transferCount++;
 			return RouteTraveller(container, position.disembark(container, transferTimeMinutes), log);
 		}
 
@@ -82,9 +84,9 @@ namespace rf
 			return RouteTraveller(container, position.travelNext(), log);
 		}
 
-		bool canTransferNext() const
+		bool canTransferNext(const SearchParameters& params) const
 		{
-			return position.canTransfer() && transfers.hasNext();
+			return position.canTransfer() && transfers.hasNext() && this->transferCount < params.maxTransfers;
 		}
 
 #pragma optimize("", off)
@@ -110,13 +112,13 @@ namespace rf
 			{
 				transfers = position.transfers(_container);
 			}
-
 			log.addPosition(position);
 		}
-
+		
 		const RouteContainer& container;
 		RoutePosition position;
 		TransferEnumerator transfers;
 		RouteLog log;
+		uint32_t transferCount = 0;
 	};
 }

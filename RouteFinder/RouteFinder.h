@@ -8,7 +8,9 @@ namespace rf
 {
 	static uint32_t travellerTime(const RouteTraveller& traveller)
 	{
-		return traveller.getTime().getWeekMinutes();
+		uint32_t startTime = traveller.getLog().firstPosition().getTime().getWeekMinutes();
+		uint32_t endTime = traveller.getLog().lastPosition().getTime().getWeekMinutes();
+		return startTime < endTime ? endTime - startTime : 7 * 24 * 60 - startTime + endTime;
 	}
 
 	template< auto EvalFunc = travellerTime > class RouteFinder
@@ -41,8 +43,9 @@ namespace rf
 
 				const uint32_t stopID = current.getStopID();
 				if (stopID == endStopID)
-				{
-					return current.getLog();
+				{	
+					std::cout << "found route";
+					return current.getLog(); 
 				}
 
 				if (current.canWaitNext())
@@ -75,7 +78,7 @@ namespace rf
 						addTraveller(travellers, current.disembark(params.transferTimeMinutes));
 					}
 
-					while (current.canTransferNext())
+					while (current.canTransferNext(params))
 					{
 						addTraveller(travellers, current.transferNext(params));
 					}
